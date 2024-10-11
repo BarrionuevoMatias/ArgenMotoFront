@@ -72,7 +72,7 @@ async function modificarVendedor(legajo, vendedorData) {
     }
 }
 */
-// Array simulado de vendedores
+
 const vendedoresDB = [
     { apellido: 'Gomez', nombre: 'Juan', razonSocial: 'MotoRepuestos', domicilio: 'Calle Falsa 123', localidad: 'Buenos Aires', provincia: 'Buenos Aires', telefono: '123456789', email: 'juan.gomez@example.com', legajo: 'V001' },
     { apellido: 'Perez', nombre: 'Laura', razonSocial: 'MotoCenter', domicilio: 'Av Siempre Viva 742', localidad: 'Rosario', provincia: 'Santa Fe', telefono: '987654321', email: 'laura.perez@example.com', legajo: 'V002' },
@@ -94,24 +94,23 @@ const vendedoresDB = [
 // Función para registrar un nuevo vendedor
 function registrarVendedor(vendedor) {
     vendedoresDB.push(vendedor);
-    return vendedor; // Retorna el vendedor registrado
+    return vendedor;
 }
 
 // Función para buscar un vendedor por legajo
 function buscarVendedor(legajo) {
-    return vendedoresDB.find(vendedor => vendedor.legajo === legajo) || null; // Retorna el vendedor encontrado o null
-}
+    return vendedoresDB.find(vendedor => vendedor.legajo === legajo) || null; 
 
 // Función para listar todos los vendedores
 function listarVendedores() {
-    return vendedoresDB; // Retorna el array completo de vendedores
+    return vendedoresDB; 
 }
 
 // Función para eliminar un vendedor
 function eliminarVendedor(legajo) {
     const index = vendedoresDB.findIndex(vendedor => vendedor.legajo === legajo);
     if (index !== -1) {
-        vendedoresDB.splice(index, 1); // Elimina el vendedor del array
+        vendedoresDB.splice(index, 1); 
     }
 }
 
@@ -119,8 +118,8 @@ function eliminarVendedor(legajo) {
 function modificarVendedor(legajo, vendedorData) {
     const index = vendedoresDB.findIndex(vendedor => vendedor.legajo === legajo);
     if (index !== -1) {
-        vendedoresDB[index] = { ...vendedoresDB[index], ...vendedorData }; // Actualiza los datos del vendedor
+        vendedoresDB[index] = { ...vendedoresDB[index], ...vendedorData }; 
         return vendedoresDB[index]; // Retorna el vendedor actualizado
     }
-    return null; // Retorna null si no se encontró el vendedor
+    return null; 
 }
