@@ -205,54 +205,54 @@ footer {
 
 /* Estilos para el modal */
 .modal {
-    display: none; /* Oculto por defecto */
-    position: fixed; /* Fijo en la pantalla */
-    z-index: 1; /* En la parte superior */
+    display: none;
+    position: fixed; 
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; /* Ancho completo */
-    height: 100%; /* Alto completo */
-    overflow: auto; /* Habilitar scroll si es necesario */
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro con opacidad */
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.5); 
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% desde arriba y centrado */
+    margin: 15% auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Ancho del modal */
+    width: 80%; 
 }
 
 .close-button {
     color: #aaa;
-    float: right; /* Flota a la derecha */
+    float: right; 
     font-size: 28px;
     font-weight: bold;
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    cursor: pointer; 
 }
 
 .close-button:hover,
 .close-button:focus {
-    color: black; /* Cambia el color al pasar el ratón */
-    text-decoration: none; /* Sin subrayado */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    color: black; 
+    text-decoration: none; 
+    cursor: pointer; 
 }
 
 .modal-actions {
-    margin-top: 20px; /* Espaciado entre la información y los botones */
+    margin-top: 20px; 
 }
 
 .modal-actions button {
-    margin-right: 10px; /* Espaciado entre botones */
+    margin-right: 10px; 
     padding: 10px 15px;
-    background-color: #4CAF50; /* Color de fondo verde */
-    color: white; /* Color de texto blanco */
-    border: none; /* Sin bordes */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer; 
 }
 
 .modal-actions button:hover {
-    background-color: #45a049; /* Color de fondo más oscuro al pasar el ratón */
+    background-color: #45a049; 
 }
