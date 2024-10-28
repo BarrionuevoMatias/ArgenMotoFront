@@ -1,161 +1,374 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,
+initial-scale=1.0">
     <title>ArgenMoto - Gestión de Compras</title>
     <link rel="stylesheet" href="styles.css">
-
 </head>
+
 <body>
-
-<header>
-    <h1>ArgenMoto - Gestión de Compras</h1>
-    <nav class="menu">
-        <button>Menú</button>
-        <div class="dropdown">
-            <a href="index.html">Inicio</a>
-            <a href="ventas.html">Ventas</a>
-            <a href="compras.html">Compras</a>
+    <header>
+        <h1>ArgenMoto - Gestión de Compras</h1>
+        <nav class="menu">
+            <button>Menú</button>
+            <div class="dropdown">
+                <a href="index.html">Inicio</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compras.html">Compras</a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('proveedores')">Proveedores</button>
+            <button class="tab-button" onclick="showTab('motos')">Motos</button>
+            <button class="tab-button" onclick="showTab('ordenes')">Órdenes
+                de Compra</button>
         </div>
-    </nav>
-</header>
-
-<div class="container">
-    <div class="tabs">
-        <button class="tab-button active" onclick="showTab('proveedores')">Proveedores</button>
-        <button class="tab-button" onclick="showTab('motos')">Motos</button>
-        <button class="tab-button" onclick="showTab('ordenes')">Órdenes de Compra</button>
+        <!-- Pestaña de Proveedores -->
+        <div id="proveedores" class="tab active">
+            <h2>Registro de Proveedores</h2>
+            <form id="form-proveedores">
+                <div class="form-group">
+                    <label for="apellido-proveedor">Apellido</label>
+                    <input type="text" id="apellido-proveedor" name="apellido-proveedor" minlength="2" maxlength="20"
+                        required pattern="[A-Za-zÀ-ÿ\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="nombre-proveedor">Nombre</label>
+                    <input type="text" id="nombre-proveedor" name="nombre-proveedor" minlength="2" maxlength="20"
+                        required pattern="[A-Za-zÀ-ÿ\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="telefono-proveedor">Teléfono</label>
+                    <input type="tel" id="telefono-proveedor" name="telefono-proveedor" minlength="8" maxlength="8"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="provincia-proveedor">Provincia</label>
+                    <select name="provincia-proveedor" id="provincia-proveedor" onchange="cambia_localidad();" required>
+                        <option value="">Seleccione</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="localidad-proveedor">Localidad</label>
+                    <select name="localidad-proveedor" id="localidad-proveedor" required>
+                        <option value="">Seleccione</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="domicilio-proveedor">Domicilio</label>
+                    <input type="text" id="domicilio-proveedor" name="domicilio-proveedor" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="email-proveedor">Email</label>
+                    <input type="email" id="email-proveedor" name="email-proveedor" pattern="[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0
+,61}
+[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" size="40" maxlength="40" required>
+                </div>
+                <div class="form-group">
+                    <label for="razon-social-proveedor">Razón
+                        Social</label>
+                    <input type="text" id="razon-social-proveedor" name="razon-social-proveedor" required>
+                </div>
+                <div class="form-group">
+                    <label for="cuit-proveedor">CUIT</label>
+                    <input type="tel" id="cuit-proveedor" name="cuit-proveedor" min="20111111119" max="27999999991"
+                        maxlength="11" placeholder="Ingrese 11 dígitos sin guiones" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoria-proveedor">Categoría</label>
+                    <input type="text" id="categoria-proveedor" name="categoria-proveedor" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Registrar Proveedor</button>
+                </div>
+            </form>
+            <h2>Búsqueda de Proveedor por ID</h2>
+            <form id="buscar-proveedor">
+                <div class="form-group">
+                    <label for="id-proveedor">ID Proveedor</label>
+                    <input type="text" id="id-proveedor" name="id-proveedor" minlength="8" maxlength="8" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <button type="submit">Buscar</button>
+            </form>
+            <h2>Listado de Proveedores</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Proveedor</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="proveedores-listado">
+                    <!-- Aqui se insertan dinamicamente los proveedores -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Pestaña de Motos -->
+        <div id="motos" class="tab">
+            <h2>Registro de Motos</h2>
+            <form id="form-motos">
+                <div class="form-group">
+                    <label for="id-moto">Código</label>
+                    <input type="text" id="id-moto" name="id-moto" minlength="3" maxlength="10" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion-moto">Descripción</label>
+                    <input type="text" id="descripcion-moto" name="descripcion-moto" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="marca-moto">Marca</label>
+                    <input type="text" id="marca-moto" name="marca-moto" required pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="modelo-moto">Modelo</label>
+                    <input type="text" id="modelo-moto" name="modelo-moto" required pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="stock-minimo-moto">Stock Mínimo</label>
+                    <input type="text" id="stock-minimo-moto" name="stock-minimo-moto" minlength="1" maxlength="5"
+                        required pattern="[0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="stock-maximo-moto">Stock Máximo</label>
+                    <input type="text" id="stock-maximo-moto" name="stock-maximo-moto" minlength="1" maxlength="5"
+                        required pattern="[0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="stock-actual-moto">Stock Actual</label>
+                    <input type="text" id="stock-actual-moto" name="stock-actual-moto" minlength="1" maxlength="5"
+                        required pattern="[0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="precio-moto">Precio</label>
+                    <input type="text" id="precio-moto" name="precio-moto" minlength="1" maxlength="10" required
+                        pattern="[0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="motor-moto">Motor</label>
+                    <input type="text" id="motor-moto" name="motor-moto" required pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="chasis-moto">Chasis</label>
+                    <input type="text" id="chasis-moto" name="chasis-moto" required pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="anio-moto">Año</label>
+                    <input type="text" id="anio-moto" name="anio-moto" minlength="4" maxlength="4" required
+                        pattern="[0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="cilindrada-moto">Cilindrada</label>
+                    <input type="text" id="cilindrada-moto" name="cilindrada-moto" required pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Registrar Moto</button>
+                </div>
+            </form>
+            <h2>Búsqueda de Moto por Código</h2>
+            <form id="buscar-moto">
+                <div class="form-group">
+                    <label for="id-moto-buscar">Código Moto</label>
+                    <input type="text" id="id-moto-buscar" name="id-moto-buscar" required>
+                </div>
+                <button type="submit">Buscar</button>
+            </form>
+            <h2>Listado de Motos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Moto</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="motos-listado">
+                    <!-- Aquí se insertan dinamicamente las motos -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Pestaña de Ordenes de Compra -->
+        <div id="ordenes" class="tab">
+            <h2>Registro de Órdenes de Compra</h2>
+            <form id="form-ordenes">
+                <div class="form-group">
+                    <label for="nro-orden">Nro orden</label>
+                    <input type="text" id="nro-orden" name="nro-orden" minlength="8" maxlength="8" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="cuit-orden">CUIT</label>
+                    <input type="text" id="cuit-orden" name="cuit-orden" min="20111111119" max="27999999991"
+                        maxlength="11" placeholder="Ingrese
+11 dígitos sin guiones" required>
+                </div>
+                <div class="form-group">
+                    <label for="razon-social-orden">Razón Social</label>
+                    <input type="text" id="razon-social-orden" name="razon-social-orden" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="proveedor-orden">Proveedor</label>
+                    <input type="text" id="proveedor-orden" name="proveedor-orden" required pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion-orden">Descripción</label>
+                    <input type="text" id="descripcion-orden" name="descripcion-orden" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="provincia-orden">Provincia</label>
+                    <select name="provincia-orden" id="provincia-orden">
+                        <option selected>
+                        <option>Buenos Aires</option>
+                        <option>Catamarca</option>
+                        <option>Chaco</option>
+                        <option>Chubut</option>
+                        <option>Ciudad Autónoma de Buenos
+                            Aires</option>
+                        <option>Córdoba</option>
+                        <option>Corrientes</option>
+                        <option>Entre Ríos</option>
+                        <option>Formosa</option>
+                        <option>Jujuy</option>
+                        <option>La Pampa</option>
+                        <option>La Rioja</option>
+                        <option>Mendoza</option>
+                        <option>Misiones</option>
+                        <option>Neuquén</option>
+                        <option>Río Negro</option>
+                        <option>Salta</option>
+                        <option>San Juan</option>
+                        <option>San Luis</option>
+                        <option>Santa Cruz</option>
+                        <option>Santa Fe</option>
+                        <option>Santiago del Estero</option>
+                        <option>Tierra del Fuego</option>
+                        <option>Tucumán</option>
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fecha-orden">Fecha Orden</label>
+                    <input type="date" id="fecha-orden" name="fecha-orden" required>
+                </div>
+                <br>
+                <hr>
+                <br>
+                <div class="form-group">
+                    <label for="codigo-orden">Código Artículo</label>
+                    <input type="text" id="codigo-orden" name="codigo-orden" minlength="8" maxlength="8" required
+                        pattern="[A-Za-zÀ-ÿ0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="cantidad-orden">Cantidad Artículo</label>
+                    <input type="text" id="cantidad-orden" name="cantidad-orden" minlength="1" maxlength="9" required>
+                </div>
+                <div class="form-group">
+                    <label for="precio-orden">Precio</label>
+                    <input type="text" id="precio-orden" name="precio-orden" minlength="1" maxlength="10" required
+                        pattern="[0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="precio-total-orden">Precio Total</label>
+                    <input type="text" id="precio-total-orden" name="precio-total-orden" minlength="1" maxlength="10"
+                        required pattern="[0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="precio-final-orden">Precio Final</label>
+                    <input type="text" id="precio-final-orden" name="precio-final-orden" minlength="1" maxlength="10"
+                        required pattern="[0-9\s]+">
+                </div>
+                <div class="form-group">
+                    <label for="iva-orden">IVA Inscripto</label>
+                    <input type="text" id="iva-orden" name="iva-orden" minlength="1" maxlength="10" required
+                        pattern="[0-9\s]+">
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Registrar Orden de
+                        Compra</button>
+                </div>
+            </form>
+            <h2>Búsqueda de orden de compras por ID</h2>
+            <form id="buscar-orden">
+                <div class="form-group">
+                    <label for="id-factura">ID Orden de Compras</label>
+                    <input type="text" id="id-orden" name="id-orden" required>
+                </div>
+                <button type="submit">Buscar</button>
+            </form>
+            <h2>Listado de Órdenes de Compra</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Orden</th>
+                        <th>Proveedor</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="ordenes-listado">
+                    <!-- Aqui se insertan dinamicamente las ordenes de
+compra -->
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <!-- Pestaña de Proveedores -->
-    <div id="proveedores" class="tab active">
-        <h2>Registro de Proveedores</h2>
-        <form id="form-proveedores">
-            <div class="form-group">
-                <label for="nombre-proveedor">Nombre del Proveedor</label>
-                <input type="text" id="nombre-proveedor" name="nombre-proveedor" required>
+    <!-- Ventana modal del proveedor -->
+    <div id="modal-proveedor" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="cerrarModalProv()">&times;</span>
+            <h2 id="modal-title">Información del Proveedor</h2>
+            <div id="proveedor-info">
             </div>
-            <div class="form-group">
-                <label for="telefono-proveedor">Teléfono</label>
-                <input type="tel" id="telefono-proveedor" name="telefono-proveedor" required>
+            <div id="modal-actions" class="modal-actions">
+                <button id="btn-modificar" onclick="mostrarFormularioModificar()">Modificar</button>
+                <button id="btn-eliminar" onclick="anularProveedorScript()">Eliminar</button>
             </div>
-            <div class="form-group">
-                <label for="email-proveedor">Email</label>
-                <input type="email" id="email-proveedor" name="email-proveedor" required>
-            </div>
-            <div class="form-actions">
-                <button type="submit">Registrar Proveedor</button>
-            </div>
-        </form>
-        <h2>Búsqueda de Proveedor por ID</h2>
-        <form id="buscar-proveedor">
-            <div class="form-group">
-                <label for="id-proveedor">ID Proveedor</label>
-                <input type="text" id="id-proveedor" name="id-proveedor" required>
-            </div>
-            <button type="submit">Buscar</button>
-        </form>
-        <h2>Listado de Proveedores</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID Proveedor</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="proveedores-listado">
-                <!-- Aqui se insertan dinamicamente los proveedores -->
-            </tbody>
-        </table>
+        </div>
     </div>
-
-    <!-- Pestaña de Motos -->
-    <div id="motos" class="tab">
-        <h2>Registro de Motos</h2>
-        <form id="form-motos">
-            <div class="form-group">
-                <label for="marca-moto">Marca</label>
-                <input type="text" id="marca-moto" name="marca-moto" required>
+    <!-- Ventana modal del stock de motos -->
+    <div id="modal-moto" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="cerrarModalMoto()">&times;</span>
+            <h2 id="modal-title">Información del Proveedor</h2>
+            <div id="moto-info">
             </div>
-            <div class="form-group">
-                <label for="modelo-moto">Modelo</label>
-                <input type="text" id="modelo-moto" name="modelo-moto" required>
+            <div id="modal-actions" class="modal-actions">
+                <button id="btn-modificar" onclick="mostrarFormularioModificar()">Modificar</button>
+                <button id="btn-eliminar" onclick="anularMotoScript()">Eliminar</button>
             </div>
-            <div class="form-actions">
-                <button type="submit">Registrar Moto</button>
-            </div>
-        </form>
-        <h2>Búsqueda de Moto por ID</h2>
-        <form id="buscar-moto">
-            <div class="form-group">
-                <label for="id-moto">ID Moto</label>
-                <input type="text" id="id-moto" name="id-moto" required>
-            </div>
-            <button type="submit">Buscar</button>
-        </form>
-        <h2>Listado de Motos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID Moto</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="motos-listado">
-                <!-- Aquí se insertan dinamicamente las motos -->
-            </tbody>
-        </table>
+        </div>
     </div>
-
-    <!-- Pestaña de Ordenes de Compra -->
-    <div id="ordenes" class="tab">
-        <h2>Registro de Órdenes de Compra</h2>
-        <form id="form-ordenes">
-            <div class="form-group">
-                <label for="proveedor-orden">Proveedor</label>
-                <input type="text" id="proveedor-orden" name="proveedor-orden" required>
+    <!-- Ventana modal de las órdenes de compra -->
+    <div id="modal-orden" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="cerrarModalOrden()">&times;</span>
+            <h2 id="modal-title">Información del Proveedor</h2>
+            <div id="orden-info">
             </div>
-            <div class="form-group">
-                <label for="descripcion-orden">Descripción</label>
-                <input type="text" id="descripcion-orden" name="descripcion-orden" required>
+            <div id="modal-actions" class="modal-actions">
+                <button id="btn-modificar" onclick="mostrarFormularioModificar()">Modificar</button>
+                <button id="btn-eliminar" onclick="anularOrdenScript()">Eliminar</button>
             </div>
-            <div class="form-actions">
-                <button type="submit">Registrar Orden de Compra</button>
-            </div>
-        </form>
-        <h2>Búsqueda de orden de compras por ID</h2>
-        <form id="buscar-orden">
-            <div class="form-group">
-                <label for="id-factura">ID Orden de Compras</label>
-                <input type="text" id="id-orden" name="id-orden" required>
-            </div>
-            <button type="submit">Buscar</button>
-        </form>
-        <h2>Listado de Órdenes de Compra</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID Orden</th>
-                    <th>Proveedor</th>
-                    <th>Descripción</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="ordenes-listado">
-                <!-- Aqui se insertan dinamicamente las ordenes de compra -->
-            </tbody>
-        </table>
+        </div>
     </div>
-</div>
-
-<!-- Vincular el archivo JavaScript -->
-<script src="script.js"></script>
-
+    <!-- Vincular el archivo JavaScript -->
+    <script src="crudCompras.js"></script>
+    <script src="scriptCompras.js"></script>
 </body>
+
 </html>
